@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1 style="text-align: center;">Liste des noms</h1>
+<ul id="name-data">
+    
+    {% for profil in profiles %}
+        {{profil.name}}
+    {% endfor %}
+        
+</ul>  
+{% endblock content %}
+
+
+{% block script %}
+    
+{% endblock script %}
+      
