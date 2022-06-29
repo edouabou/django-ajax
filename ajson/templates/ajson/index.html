@@ -1,19 +1,53 @@
 {% extends 'base.html' %}
 
+{% block style %}
+    <style>
+        h1{
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+        }
+    </style>    
+
+{% endblock style %}
+    
 
 {% block content %}
-<h1 style="text-align: center;">Liste des noms</h1>
+<h1>Liste des noms</h1>
 <ul id="name-data">
     
-    {% for profil in profiles %}
-        {{profil.name}}
-    {% endfor %}
         
 </ul>  
 {% endblock content %}
 
 
 {% block script %}
-    
+
+<script>
+    $(document).ready(()=>{
+        setInterval(()=>{
+            $.ajax({
+                type:'GET',
+                url :"{% url 'ajson:getdata' %}",
+                success: (response)=>{
+                    //console.log(response)
+                    $("#name-data").empty();
+                    
+                    for(key in response.profiles){
+                        let temp = "<li>"+response.profiles[key].name +"</li><hr>"
+                          $("#name-data").append(temp)
+                    }
+                        
+                },
+                error: (response)=>{
+                    //alert(" erreur .....")
+                }
+
+            })
+        },1000)
+    })
+</script>
+
 {% endblock script %}
       

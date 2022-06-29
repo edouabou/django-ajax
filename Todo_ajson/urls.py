@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from ajson import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('ajson.urls'))
+    path("ajson/",include('ajson.urls')),
+    path('',views.viewdata, name='viewdata')
 ]

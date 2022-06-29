@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block style %}
+    <style>
+        button {
+            color: brown;
+        }
+    </style>
+
+{% endblock style %}
+    
+{% block content %}
+<h1>Remplir le formulaire</h1>
+    <form id="post-form">
+        <p><label for="username">Name </label> <input type="text" id="username" name="name"></p>
+        <p><label for="username">Email </label> <input type="email" id="email" name="email"></p>
+        <p><label for="username">A propos de </label> <input type="text" id="about" name="about"></p>
+        {% csrf_token %}
+        <p><button type="submit">Envoyer</button></p>
+    </form>
+
+{% endblock content %}
+
+
+{% block script %}
+ <script>
+    $(document).on('submit','#post-form',(e)=>{
+        e.preventDefault;
+        $.ajax({
+            type:'POST',
+            url:"{% url 'ajson:create' %}",
+            data:{
+                name:$('#username').val(),
+                email:$('#email').val(),
+                about:$('#about').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:()=>{
+                alert("données enregistrées")
+            }
+        })
+
+    })
+ </script>   
+ 
+{% endblock script %}
+    
+    
